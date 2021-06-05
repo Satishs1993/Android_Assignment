@@ -29,14 +29,4 @@ interface ImpApiCall {
         }
     }
 
-    suspend fun <T> safeDbCall (dbCall : suspend () -> T): RetrofitCallbackResource<T>{
-        return withContext(Dispatchers.IO){
-            try {
-                RetrofitCallbackResource.Success(dbCall.invoke())
-            }catch (throwable : Exception){
-               RetrofitCallbackResource.Error(null,false,throwable.message.toString(),
-               null)
-            }
-        }
-    }
 }
